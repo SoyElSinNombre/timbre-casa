@@ -4,13 +4,72 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Timbre de Casa</title>
+  <style>
+    /* Fondo */
+    body {
+      background: linear-gradient(135deg, #dce8ff, #f6f9ff);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 40px;
+      font-size: 2em;
+    }
+
+    /* Botón tipo timbre */
+    #timbre {
+      background: radial-gradient(circle at top left, #4e9af1, #0073ff);
+      color: white;
+      border: none;
+      border-radius: 100%;
+      width: 150px;
+      height: 150px;
+      font-size: 2em;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+
+    /* Efecto al presionar */
+    #timbre:active {
+      transform: scale(0.95);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+      background: radial-gradient(circle at bottom right, #4e9af1, #005ce6);
+    }
+
+    /* Mensaje temporal */
+    #mensaje {
+      margin-top: 20px;
+      color: #333;
+      font-size: 1.2em;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    #mensaje.visible {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
-  <h1>Timbre de Casa 🏠</h1>
-  <button id="timbre">🔔 Tocar Timbre</button>
+  <h1>🏠 Timbre de Casa</h1>
+  <button id="timbre">🔔</button>
+  <div id="mensaje"></div>
 
   <script>
-    document.getElementById("timbre").addEventListener("click", async () => {
+    const boton = document.getElementById("timbre");
+    const mensaje = document.getElementById("mensaje");
+
+    boton.addEventListener("click", async () => {
+      mensaje.textContent = "Enviando...";
+      mensaje.classList.add("visible");
+
       const res = await fetch("/api/sendMessage", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -18,10 +77,12 @@
       });
 
       if (res.ok) {
-        alert("Timbre enviado ✅");
+        mensaje.textContent = "✅ Timbre enviado correctamente";
       } else {
-        alert("Error al enviar el mensaje ❌");
+        mensaje.textContent = "❌ Error al enviar el timbre";
       }
+
+      setTimeout(() => mensaje.classList.remove("visible"), 3000);
     });
   </script>
 </body>
