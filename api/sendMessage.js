@@ -2,7 +2,7 @@ export default async function handler(req, res) {
   const TOKEN = process.env.TELEGRAM_TOKEN;
   const CHAT_ID = process.env.CHAT_ID;
 
-  const text = encodeURIComponent("🔔 Hay alguien en la puerta.");
+  const text = encodeURIComponent("🔔 Shaira fea XD.");
 
   // Enviar mensaje a Telegram
   const apiUrl = `https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${text}`;
@@ -19,3 +19,4 @@ export default async function handler(req, res) {
     </html>
   `);
 }
+
