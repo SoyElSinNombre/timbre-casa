@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timbre de Casa</title>
+</head>
+<body>
+  <h1>Timbre de Casa 🏠</h1>
+  <button id="timbre">🔔 Tocar Timbre</button>
+
+  <script>
+    document.getElementById("timbre").addEventListener("click", async () => {
+      const res = await fetch("/api/sendMessage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: "Alguien tocó el timbre 🚪🔔" })
+      });
+
+      if (res.ok) {
+        alert("Timbre enviado ✅");
+      } else {
+        alert("Error al enviar el mensaje ❌");
+      }
+    });
+  </script>
+</body>
+</html>
